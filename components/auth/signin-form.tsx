@@ -19,6 +19,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import ForgetPassword from "./forget-password";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 type SignIn = z.infer<typeof SignInSchema>;
 
@@ -37,29 +39,31 @@ export default function SignInForm() {
   const {
     formState: { isSubmitting },
   } = form;
+
+  const router = useRouter();
   const onSubmit = async (values: SignIn) => {
     setError("");
     setSuccess("");
-    {
-      // console.log(values);
-      try {
-        const response = await fetch(`/api/register`, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(values),
-        });
-        // console.log(response);
-        // response.status === 201 && router.push("/");
-        const data = await response.json();
-        response.status === 201 && setSuccess(data.success);
-        response.status !== 201 && setError(data.error);
-      } catch (e) {
-        setError(`Something Went Wrong!`);
-        console.error(e);
+    const { email, password } = values;
+
+    const { data, error } = await authClient.signIn.email(
+      {
+        email: email,
+        password: password,
+        callbackURL: "/dashboard",
+      },
+      {
+        onSuccess: async (context) => {
+          setSuccess("Successfully Logged In! Redirecting...");
+          setTimeout(() => {
+            router.push("/dashboard");
+          }, 1000);
+        },
+        onError: async (context) => {
+          setError(context.error.message);
+        },
       }
-    }
+    );
   };
   return (
     <>

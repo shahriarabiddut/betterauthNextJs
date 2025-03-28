@@ -12,6 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 import { SignUpSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
@@ -40,26 +41,27 @@ export default function SignUpForm() {
   const onSubmit = async (values: SignUp) => {
     setError("");
     setSuccess("");
-    {
-      // console.log(values);
-      try {
-        const response = await fetch(`/api/register`, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(values),
-        });
-        // console.log(response);
-        // response.status === 201 && router.push("/");
-        const data = await response.json();
-        response.status === 201 && setSuccess(data.success);
-        response.status !== 201 && setError(data.error);
-      } catch (e) {
-        setError(`Something Went Wrong!`);
-        console.error(e);
+    const { email, password, name } = values;
+
+    const { data, error } = await authClient.signUp.email(
+      {
+        email: email,
+        password: password,
+        name: name,
+        callbackURL: "/sign-in",
+      },
+      {
+        onSuccess: async (context) => {
+          setSuccess("Account Created Successfully! Redirecting...");
+          setTimeout(() => {
+            router.push("/sign-in");
+          }, 1000);
+        },
+        onError: async (context) => {
+          setError(context.error.message);
+        },
       }
-    }
+    );
   };
   return (
     <CardWrapper

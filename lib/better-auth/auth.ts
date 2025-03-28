@@ -15,8 +15,8 @@ export const auth = betterAuth({
   database: mongodbAdapter(db),
   emailAndPassword: {
     enabled: true, // Mark this true to use email & password verification
-    autoSignIn: false, // Mark this true for auto sign-in after sign-up
-    requireEmailVerification: false, // Mark this true to restrict unverified users this will reduce spam (recommended => true)
+    // autoSignIn: false, // Mark this true for auto sign-in after sign-up
+    // requireEmailVerification: false, // Mark this true to restrict unverified users this will reduce spam (recommended => true)
   },
   socialProviders: {
     github: {

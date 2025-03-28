@@ -1,56 +1,38 @@
+import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/lib/better-auth/auth";
-import { protectedRoutes } from "@/lib/constants/env";
+import { Session } from "@/lib/better-auth/auth-types";
 
-export async function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname;
-
-  // Skip middleware for public routes & static files
-  if (
-    path.startsWith("/_next") || // Next.js internals
-    path.startsWith("/sign-in") || // Public auth page
-    path.match(/\.(ico|svg|png|jpg|jpeg|css|js)$/) // Static files
-  ) {
-    return NextResponse.next();
-  }
-
-  // Check if the current path is a private route
-  const isPrivateRoute = protectedRoutes.some((route) => {
-    if (route.includes(":path*")) {
-      const basePath = route.replace("/:path*", "");
-      return path.startsWith(basePath);
-    }
-    return path === route; // Exact match
+async function getMiddlewareSession(req: NextRequest) {
+  const { data: session } = await axios.get<Session>("/api/auth/get-session", {
+    baseURL: req.nextUrl.origin,
+    headers: {
+      //get the cookie from the request
+      cookie: req.headers.get("cookie") || "",
+    },
   });
 
-  if (isPrivateRoute) {
-    const session = await auth.api.getSession({
-      headers: {
-        cookie: request.headers.get("cookie") || "",
-      },
-    });
+  return session;
+}
 
+export default async function authMiddleware(req: NextRequest) {
+  const session = await getMiddlewareSession(req);
+  const url = req.url;
+  const pathname = req.nextUrl.pathname;
+
+  if (pathname.startsWith("/dashboard")) {
     if (!session) {
-      // Redirect to sign-in with a return URL
-      const signInUrl = new URL("/sign-in", request.url);
-      signInUrl.searchParams.set("callbackUrl", path);
-      return NextResponse.redirect(signInUrl);
+      return NextResponse.redirect(new URL("/sign-in", url));
     }
-  }
 
-  return NextResponse.next();
+    return NextResponse.next();
+  }
 }
 
 export const config = {
   matcher: [
-    // Specific paths (recommended)
     "/dashboard",
     "/dashboard/:path*",
-
     // OR regex for advanced matching:
     "/((?!api|trpc|_next/static|_next/image|favicon.ico).*)",
-
-    // "/api/protected/:path*", // Protect certain APIs
-    // "/api/:path*", // Protect certain APIs
   ],
 };
