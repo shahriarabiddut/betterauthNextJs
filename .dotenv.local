@@ -1,0 +1,14 @@
+#Modify File - .dotenv to .env.local or .env
+
+#Better Auth
+BETTER_AUTH_SECRET=
+BETTER_AUTH_URL=http://localhost:3000 #Base URL of your app
+
+#Privider Secret
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+
+MONGO_DB_CONNECTION_STRING=mongodb+srv://<user>:<password>@<clusterLink>/<CollectionNAMEoRrEMOVEtHIS>?retryWrites=true&w=majority&appName=<APPNAME>
+NODE_ENV='development'
