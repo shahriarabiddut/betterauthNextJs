@@ -1,23 +1,10 @@
-import { LoginButton } from "@/components/auth/login-button";
-import { TypographyH1 } from "@/components/typography";
-import { Button } from "@/components/ui/button";
+import SignUpForm from "@/components/auth/signup-form";
+import React from "react";
 
-export default function SignUp() {
+export default function Register() {
   return (
-    <main className="flex flex-col h-screen justify-center items-center bg-gradient-to-r from-blue-800 via-sky-500  to-blue-800">
-      <div className="space-y-6 flex flex-col  justify-center items-center">
-        <TypographyH1>Sign Up</TypographyH1>
-        <p className="text-white text-lg ">
-          Better Authentication service with Better Auth!
-        </p>
-        <div>
-          <LoginButton mode={"redirect"}>
-            <Button variant={"secondary"} size={"lg"}>
-              Sign In{" "}
-            </Button>
-          </LoginButton>
-        </div>
-      </div>
-    </main>
+    <section className="flex flex-col h-screen justify-center items-center bg-gradient-to-r from-blue-800 via-sky-500  to-blue-800">
+      <SignUpForm />
+    </section>
   );
 }
