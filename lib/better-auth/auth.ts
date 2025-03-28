@@ -1,13 +1,22 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
-import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from "@/lib/constants/env";
+import {
+  GITHUB_CLIENT_ID,
+  GITHUB_CLIENT_SECRET,
+  MONGODB_URL,
+} from "@/lib/constants/env";
 import { nextCookies } from "better-auth/next-js";
-// import { client } from "@/db"; // your mongodb client
+import { MongoClient } from "mongodb";
+
+const client = new MongoClient(MONGODB_URL);
+const db = client.db();
 
 export const auth = betterAuth({
-  // database: mongodbAdapter(client)
+  database: mongodbAdapter(db),
   emailAndPassword: {
-    enabled: true,
+    enabled: true, // Mark this true to use email & password verification
+    autoSignIn: false, // Mark this true for auto sign-in after sign-up
+    requireEmailVerification: false, // Mark this true to restrict unverified users this will reduce spam (recommended => true)
   },
   socialProviders: {
     github: {
