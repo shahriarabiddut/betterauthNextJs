@@ -24,6 +24,7 @@ import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { Button } from "@/components/ui/button";
 import { Input } from "../ui/input";
+import { authClient } from "@/lib/auth-client";
 
 type Email = z.infer<typeof EmailSchema>;
 
@@ -50,26 +51,23 @@ const ForgetPassword = ({
   const onSubmit = async (values: Email) => {
     setError("");
     setSuccess("");
-    {
-      // console.log(values);
-      try {
-        const response = await fetch(`/api/register`, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(values),
-        });
-        // console.log(response);
-        // response.status === 201 && router.push("/");
-        const data = await response.json();
-        response.status === 201 && setSuccess(data.success);
-        response.status !== 201 && setError(data.error);
-      } catch (e) {
-        setError(`Something Went Wrong!`);
-        console.error(e);
+    const { email } = values;
+    await authClient.forgetPassword(
+      {
+        email,
+        redirectTo: "/reset-password",
+      },
+      {
+        onSuccess: async (context) => {
+          setSuccess(
+            "Reset Password Email Sent! If not found, Check Spams Also..."
+          );
+        },
+        onError: async (context) => {
+          setError(context.error.message);
+        },
       }
-    }
+    );
   };
   return (
     <Dialog open={isForget} onOpenChange={() => setIsForget(false)}>

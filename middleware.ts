@@ -1,6 +1,7 @@
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 import { Session } from "@/lib/better-auth/auth-types";
+import { loggedInInvalidRoutes } from "./lib/constants/env";
 
 async function getMiddlewareSession(req: NextRequest) {
   const { data: session } = await axios.get<Session>("/api/auth/get-session", {
@@ -19,6 +20,12 @@ export default async function authMiddleware(req: NextRequest) {
   const url = req.url;
   const pathname = req.nextUrl.pathname;
 
+  if (loggedInInvalidRoutes.some((route) => pathname.startsWith(route))) {
+    if (session) {
+      return NextResponse.redirect(new URL("/dashboard", url));
+    }
+    return NextResponse.next();
+  }
   if (pathname.startsWith("/dashboard")) {
     if (!session) {
       return NextResponse.redirect(new URL("/sign-in", url));

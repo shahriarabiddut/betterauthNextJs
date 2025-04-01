@@ -8,10 +8,12 @@ import {
 import Header from "@/components/auth/header";
 import Social from "@/components/auth/social";
 import BackButton from "@/components/auth/back-button";
+import { SITE_URL } from "@/lib/constants/env";
 
 interface CardWrapperProps {
   children: React.ReactNode;
   cardTitle: string;
+  // cardTitleLink?: string;
   headerLabel: string;
   backButtonLabel?: string;
   backButtonLinkLabel: string;
@@ -28,10 +30,15 @@ export default function CardWrapper({
   backButtonHref,
   showSocial,
 }: CardWrapperProps) {
+  const EnableLink = false; // Set to true to enable link
   return (
     <Card className="w-[400px] shadow-md">
-      <CardHeader>
-        <Header title={cardTitle} label={headerLabel} />
+      <CardHeader className="text-center">
+        {EnableLink ? (
+          <Header title={cardTitle} link={SITE_URL} label={headerLabel} />
+        ) : (
+          <Header title={cardTitle} link={"disabled"} label={headerLabel} />
+        )}
       </CardHeader>
       <CardContent>{children}</CardContent>
       {showSocial && (

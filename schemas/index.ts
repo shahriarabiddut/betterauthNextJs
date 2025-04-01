@@ -7,6 +7,17 @@ export const SignInSchema = z.object({
   }),
 });
 
+export const ResetPassSchema = z.object({
+  password: z
+    .string()
+    .min(6, {
+      message: "Minimum 6 Characters Required!",
+    })
+    .max(30, {
+      message: "Maximum 30 Characters!",
+    }),
+});
+
 export const SignUpSchema = z.object({
   email: z.string().email({
     message: "Email Is Required!",

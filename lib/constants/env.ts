@@ -6,8 +6,25 @@ export const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET || "";
 export const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "";
 export const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || "";
 export const NODE_ENV = process.env.NODE_ENV || "development";
+export const SMTP_HOST = process.env.SMTP_HOST || "smtp.gmail.com";
+export const SMTP_PORT = process.env.SMTP_PORT || "587";
+export const MAIL_USER = process.env.MAIL_USER || "credentialsNotFound";
+export const MAIL_PASS = process.env.MAIL_PASS || "credentialsNotFound";
+export const SMTP_SECURE = process.env.SMTP_SECURE || false;
+
+export const SITE_NAME =
+  process.env.NEXT_PUBLIC_SITE_NAME || "Shahriar Ahmed Biddut";
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000/";
+export const SITE_EMAIL = process.env.SITE_EMAIL || "credentialsNotFound";
 
 export const protectedRoutes = [
   "/dashboard",
   "/dashboard/:path*", // All subroutes under /dashboard
+];
+// Define routes that logged-in users **should not** access
+export const loggedInInvalidRoutes = [
+  "/sign-",
+  "/verify-email",
+  "/reset-password",
 ];

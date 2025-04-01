@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
+import { SITE_NAME } from "@/lib/constants/env";
 import { SignUpSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
@@ -65,7 +66,7 @@ export default function SignUpForm() {
   };
   return (
     <CardWrapper
-      cardTitle="BetterAuth"
+      cardTitle={SITE_NAME}
       headerLabel="Create An Account"
       backButtonLabel="Already Have an account?&nbsp;"
       backButtonLinkLabel={" Login!"}
