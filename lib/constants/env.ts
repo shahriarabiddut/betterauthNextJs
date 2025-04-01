@@ -14,6 +14,8 @@ export const SMTP_SECURE = process.env.SMTP_SECURE || false;
 
 export const SITE_NAME =
   process.env.NEXT_PUBLIC_SITE_NAME || "Shahriar Ahmed Biddut";
+export const SITE_DESCRIPTION =
+  process.env.NEXT_PUBLIC_SITE_DESCRIPTION || "Next.js Description Boilerplate";
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000/";
 export const SITE_EMAIL = process.env.SITE_EMAIL || "credentialsNotFound";

@@ -1,15 +1,26 @@
-import React from "react";
+import "@/app/globals.css";
+import { DashboardHeader } from "@/components/dashboard/dashboard-header";
+import { DashboardShell } from "@/components/dashboard/dashboard-shell";
+import { DashboardSidebar } from "@/components/dashboard/dashboard-sidebar";
+import { ThemeProvider } from "@/components/dashboard/theme-provider";
+import type React from "react";
 
-export default async function DashboardLayout({
+export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <main
-      className={`w-full min-h-screen bg-gradient-to-r from-gray-800 via-slate-500  to-neutral-800`}
-    >
-      {children}
-    </main>
+    <>
+      <ThemeProvider>
+        <div className="flex min-h-screen flex-col">
+          <DashboardHeader />
+          <div className="flex flex-1">
+            <DashboardSidebar />
+            <DashboardShell>{children}</DashboardShell>
+          </div>
+        </div>
+      </ThemeProvider>
+    </>
   );
 }
