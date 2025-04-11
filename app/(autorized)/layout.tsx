@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/dashboard/theme-provider";
 import { getServerSession } from "@/lib/action";
 import { redirect } from "next/navigation";
 import type React from "react";
+import { Toaster } from "sonner";
 
 export default async function DashboardLayout({
   children,
@@ -26,6 +27,7 @@ export default async function DashboardLayout({
             <DashboardShell>{children}</DashboardShell>
           </div>
         </div>
+        <Toaster />
       </ThemeProvider>
     </>
   );

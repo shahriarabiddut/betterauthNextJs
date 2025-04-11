@@ -61,3 +61,24 @@ export const EmailSchema = z.object({
     .email("Please enter a valid email")
     .toLowerCase(),
 });
+
+export const UpdateUserSchema = z.object({
+  image: z.string().url(),
+  name: z
+    .string()
+    .min(1, {
+      message: "Name is Required!",
+    })
+    .max(30, {
+      message: "Name must be at most 30 characters!",
+    }),
+});
+
+export const UpdateUserEmailSchema = z.object({
+  newEmail: z
+    .string()
+    .min(6, "Email must be at least 6 characters")
+    .email("Please enter a valid email")
+    .toLowerCase(),
+  callbackURL: z.string().default("/dashboard"),
+});

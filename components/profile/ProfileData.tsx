@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-// import { Session } from "better-auth";
+import { Session } from "@/lib/better-auth/auth-types";
 import { format } from "date-fns";
 
 export default function ProfileData({ session }: { session: Session }) {

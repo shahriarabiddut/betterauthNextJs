@@ -11,12 +11,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { authClient } from "@/lib/auth-client";
-import { CreditCard, LifeBuoy, LogOut, Settings, User } from "lucide-react";
+import { Session } from "@/lib/better-auth/auth-types";
+import { CreditCard, Edit, LifeBuoy, LogOut, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export function UserNav({ session }: { session: Session }) {
   const { name, email } = session?.user;
+  const proPic = session?.user?.image || "";
   const router = useRouter();
   const handleSignOut = async () => {
     await authClient.signOut();
@@ -28,15 +30,13 @@ export function UserNav({ session }: { session: Session }) {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage
-              src="/placeholder.svg?height=32&width=32"
-              alt="@user"
-            />
+            <AvatarImage src={proPic} alt="@user" />
             <AvatarFallback>
-              {name
-                .split(" ")
-                .map((word) => word[0].toUpperCase())
-                .join("")}
+              {!proPic &&
+                name
+                  .split(" ")
+                  .map((word) => word[0].toUpperCase())
+                  .join("")}
             </AvatarFallback>
           </Avatar>
         </Button>
@@ -62,8 +62,14 @@ export function UserNav({ session }: { session: Session }) {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
+            <Link
+              href={"/dashboard/profile/edit"}
+              className="cursor-pointer flex items-center justify-start gap-2 w-full"
+            >
+              {" "}
+              <Edit className="mr-2 h-4 w-4" />
+              <span>Edit Profile</span>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <CreditCard className="mr-2 h-4 w-4" />

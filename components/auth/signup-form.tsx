@@ -53,10 +53,12 @@ export default function SignUpForm() {
       },
       {
         onSuccess: async (context) => {
-          setSuccess("Account Created Successfully! Redirecting...");
+          setSuccess(
+            "Account Created Successfully! Sending Verification Email....."
+          );
           setTimeout(() => {
-            router.push("/sign-in");
-          }, 1000);
+            router.push(`/email-verification?email=${email}`);
+          }, 300);
         },
         onError: async (context) => {
           setError(context.error.message);

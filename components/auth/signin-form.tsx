@@ -61,6 +61,10 @@ export default function SignInForm() {
           }, 1000);
         },
         onError: async (context) => {
+          console.log(context);
+          if (context.error.status === 403) {
+            alert("Please verify your email address");
+          }
           setError(context.error.message);
         },
       }

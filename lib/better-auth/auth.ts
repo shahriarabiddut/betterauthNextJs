@@ -16,8 +16,8 @@ export const auth = betterAuth({
   database: mongodbAdapter(db),
   emailAndPassword: {
     enabled: true, // Mark this true to use email & password verification
-    // autoSignIn: false, // Mark this true for auto sign-in after sign-up
-    // requireEmailVerification: false, // Mark this true to restrict unverified users this will reduce spam (recommended => true)
+    autoSignIn: false, // Mark this true for auto sign-in after sign-up
+    requireEmailVerification: true, // Mark this true to restrict unverified users this will reduce spam (recommended => true)
     sendResetPassword: async ({
       user,
       url,
@@ -33,17 +33,53 @@ export const auth = betterAuth({
         email: user.email,
         subject: "Reset Your Password",
         html: `
-      <div style="font-family: Arial, sans-serif; text-align: center;">
-        <h2>Password Reset Request</h2>
-        <p>Click the button below to reset your password:</p>
-        <a href="${resetUrl}" 
-           style="display: inline-block; padding: 10px 20px; margin: 20px 0; color: #fff; background-color: #007bff; text-decoration: none; border-radius: 5px;">
-          Reset Password
-        </a>
-        <p>If you did not request this, please ignore this email.</p>
-      </div>
-    `,
+              <div style="font-family: Arial, sans-serif; text-align: center;">
+                <h2>Password Reset Request</h2>
+                <p>Click the button below to reset your password:</p>
+                <a href="${resetUrl}" 
+                  style="display: inline-block; padding: 10px 20px; margin: 20px 0; color: #fff; background-color: #007bff; text-decoration: none; border-radius: 5px;">
+                  Reset Password
+                </a>
+                <p>If you did not request this, please ignore this email.</p>
+              </div>
+            `,
       });
+    },
+  },
+  emailVerification: {
+    sendOnSignUp: true,
+    autoSignInAfterVerification: true,
+    sendVerificationEmail: async ({ user, url, token }, request) => {
+      await sendEmail("verify-email", {
+        email: user.email,
+        url: url,
+      });
+    },
+  },
+  // Change User Email Process
+  user: {
+    changeEmail: {
+      enabled: true,
+      sendChangeEmailVerification: async (
+        { user, newEmail, url, token },
+        request
+      ) => {
+        await sendEmail("custom", {
+          email: user.email,
+          subject: "Approve Email Change",
+          html: `
+                <div style="font-family: Arial, sans-serif; text-align: center;">
+                  <h2>Approve Email Change Request</h2>
+                  <p>Click the button below to confirm:</p>
+                  <a href="${url}" 
+                    style="display: inline-block; padding: 10px 20px; margin: 20px 0; color: #fff; background-color: #007bff; text-decoration: none; border-radius: 5px;">
+                    I Confirm To Change My Email
+                  </a>
+                  <p>If you did not request this, please ignore this email.</p>
+                </div>
+              `,
+        });
+      },
     },
   },
 

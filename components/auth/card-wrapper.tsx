@@ -46,13 +46,15 @@ export default function CardWrapper({
           <Social />
         </CardFooter>
       )}
-      <CardFooter>
-        <BackButton
-          labelText={backButtonLabel}
-          labelLink={backButtonLinkLabel}
-          href={backButtonHref}
-        />
-      </CardFooter>
+      {backButtonLabel !== "hide" && (
+        <CardFooter>
+          <BackButton
+            labelText={backButtonLabel}
+            labelLink={backButtonLinkLabel}
+            href={backButtonHref}
+          />
+        </CardFooter>
+      )}
     </Card>
   );
 }
