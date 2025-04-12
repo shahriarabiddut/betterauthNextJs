@@ -29,6 +29,6 @@ export const protectedRoutes = [
 // Define routes that logged-in users **should not** access
 export const loggedInInvalidRoutes = [
   "/sign-",
-  "/verify-email",
+  "/email-verification",
   "/reset-password",
 ];

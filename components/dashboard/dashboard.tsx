@@ -6,7 +6,7 @@ import { ThemeProvider } from "@/components/dashboard/theme-provider";
 
 export function DashboardComponent() {
   return (
-    <ThemeProvider defaultTheme="system" storageKey="ui-theme">
+    <ThemeProvider defaultTheme={"system"} storageKey="ui-theme">
       <div className="flex min-h-screen flex-col">
         <DashboardHeader />
         <div className="flex flex-1">

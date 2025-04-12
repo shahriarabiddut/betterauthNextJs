@@ -53,7 +53,7 @@ export default function UpdateEmailForm({ user }: { user: SessionUser }) {
     <>
       <Card>
         <CardHeader>
-          <CardTitle className="text-xl">Change Profile Email</CardTitle>
+          <CardTitle className="text-xl">Change User Email</CardTitle>
         </CardHeader>
         <CardContent className="space-y-2">
           <Form {...form}>
@@ -63,9 +63,14 @@ export default function UpdateEmailForm({ user }: { user: SessionUser }) {
                 name="newEmail"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>New Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="email@gmail.com" {...field} />
+                      <Input
+                        type="email"
+                        disabled={isSubmitting}
+                        placeholder="email@gmail.com"
+                        {...field}
+                      />
                     </FormControl>
                     <FormDescription>
                       This is you used to login.

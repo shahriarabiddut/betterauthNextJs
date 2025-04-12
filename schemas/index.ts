@@ -61,6 +61,16 @@ export const EmailSchema = z.object({
     .email("Please enter a valid email")
     .toLowerCase(),
 });
+export const PasswordSchema = z.object({
+  password: z
+    .string()
+    .min(6, {
+      message: "Minimum 6 Characters Required!",
+    })
+    .max(30, {
+      message: "Maximum 30 Characters!",
+    }),
+});
 
 export const UpdateUserSchema = z.object({
   image: z.string().url(),
@@ -81,4 +91,23 @@ export const UpdateUserEmailSchema = z.object({
     .email("Please enter a valid email")
     .toLowerCase(),
   callbackURL: z.string().default("/dashboard"),
+});
+export const UpdateUserPasswordSchema = z.object({
+   newPassword: z
+    .string()
+    .min(6, {
+      message: "Minimum 6 Characters Required!",
+    })
+    .max(30, {
+      message: "Maximum 30 Characters!",
+    }),
+    currentPassword: z
+    .string()
+    .min(6, {
+      message: "Minimum 6 Characters Required!",
+    })
+    .max(30, {
+      message: "Maximum 30 Characters!",
+    }),
+    revokeOtherSessions: z.boolean()
 });

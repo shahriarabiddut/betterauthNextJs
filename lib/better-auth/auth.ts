@@ -83,12 +83,12 @@ export const auth = betterAuth({
     },
   },
 
-  socialProviders: {
-    github: {
-      clientId: GITHUB_CLIENT_ID,
-      clientSecret: GITHUB_CLIENT_SECRET,
-    },
-  },
+  // socialProviders: {
+  //   github: {
+  //     clientId: GITHUB_CLIENT_ID,
+  //     clientSecret: GITHUB_CLIENT_SECRET,
+  //   },
+  // },
 
   plugins: [nextCookies()], // make sure this is the last plugin in the array
 });
