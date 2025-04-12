@@ -81,6 +81,35 @@ export const auth = betterAuth({
         });
       },
     },
+    deleteUser: {
+            enabled: true,
+            sendDeleteAccountVerification: async (
+                {
+                    user,   // The user object
+                    url, // The auto-generated URL for deletion
+                    token  // The verification token  (can be used to generate custom URL)
+                },
+                request  // The original request object (optional)
+            ) => {
+                // Your email sending logic here
+                await sendEmail("custom", {
+                email: user.email,
+                subject: "Confirm Your Account Deletion ?",
+                html: `
+                      <div style="font-family: Arial, sans-serif; text-align: center;">
+                        <h2>Confirm Your Account Deletion Request</h2>
+                        <p>Click the button below to confirm:</p>
+                        <a href="${url}" 
+                          style="display: inline-block; padding: 10px 20px; margin: 20px 0; color: #fff; background-color: #007bff; text-decoration: none; border-radius: 5px;">
+                          I Confirm To Delete
+                        </a>
+                        <p>If you did not request this, please ignore this email.</p>
+                      </div>
+                    `,
+              });
+            },
+        },
+    
   },
 
   // socialProviders: {
