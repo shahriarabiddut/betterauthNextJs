@@ -3,7 +3,8 @@ import UpdateEmailForm from "@/components/profile/UpdateEmailForm";
 import UpdatePasswordForm from "@/components/profile/UpdatePasswordForm";
 import UpdateUserForm from "@/components/profile/UpdateUserForm";
 import { getServerSession } from "@/lib/action";
-import AccountDelete from "@/components/profile/AccountDelete";
+import AccountDelete from "@/components/profile/AccountDeleteEmail";
+import AccountDeleteEmail from "@/components/profile/AccountDeleteEmail";
 
 const EditProfile = async () => {
   const session = await getServerSession();
@@ -12,7 +13,7 @@ const EditProfile = async () => {
   return (
     <div className="p-4 pt-6 md:p-8">
       <Tabs defaultValue="profile" className="w-full space-y-4">
-        <TabsList className="grid w-full md:grid-cols-2 lg:grid-cols-4 ">
+        <TabsList className="grid w-full md:grid-cols-2 lg:grid-cols-4 cursor-pointer">
           <TabsTrigger value="profile">Profile</TabsTrigger>
           <TabsTrigger value="email">Email</TabsTrigger>
           <TabsTrigger value="password">Password</TabsTrigger>
@@ -31,7 +32,7 @@ const EditProfile = async () => {
           <UpdatePasswordForm user={user} />
         </TabsContent>
         <TabsContent value="delete">
-          <AccountDelete />
+          <AccountDeleteEmail />
         </TabsContent>
       </Tabs>
     </div>

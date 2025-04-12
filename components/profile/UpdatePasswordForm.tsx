@@ -75,7 +75,7 @@ export default function UpdatePasswordForm({ user }: { user: SessionUser }) {
                       />
                     </FormControl>
                     <FormDescription>
-                      This is you used to login.
+                      This New Password you will use to login.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

@@ -7,7 +7,8 @@ import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
-export default function AccountDelete() {
+export default function AccountDeleteEmail() {
+  // Uncomment sendDeleteAccountVerification in auth.ts
   const [isDeleting, setIsDeleting] = useState(false);
   return (
     <>
