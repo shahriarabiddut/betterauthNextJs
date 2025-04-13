@@ -8,23 +8,33 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getServerSession } from "@/lib/action";
 import { auth } from "@/lib/better-auth/auth";
 import { headers } from "next/headers";
+import { NEXT_PUBLIC_GOOGLE, NEXT_PUBLIC_GITHUB } from "@/lib/constants/env";
 
 const EditProfile = async () => {
   const session = await getServerSession();
   const { user } = session;
+
   // Get The Provider
-  const { provider } = (
-    await auth.api.listUserAccounts({
-      headers: await headers(),
-    })
-  )[0];
-  // console.log(provider);
+  const accounts = await auth.api.listUserAccounts({
+    headers: await headers(),
+  });
+
+  // Find specific accounts by provider
+  const credentialAccount = accounts.find(
+    (acc) => acc.provider === "credential"
+  );
+  const oAuthAccount = accounts.find((acc) => acc.provider !== "credential");
+
+  // Providers
+  const credentialProvider = credentialAccount?.provider;
+  const oAuthProvider = oAuthAccount?.provider || null;
+
   return (
-    <section className="space-y-1">
-      {provider ? (
+    <section className="space-y-1 pt-5 pb-10">
+      {!credentialProvider ? (
         <>
           <div className="p-4 pt-6 md:px-8 md:py-2">
-            <ProviderDetails provider={provider} />
+            <ProviderDetails provider={oAuthProvider} />
           </div>
           <div className="p-4 pt-6 md:px-8 md:py-2">
             <Tabs defaultValue="profile" className="w-full space-y-4">
@@ -71,6 +81,13 @@ const EditProfile = async () => {
 
           <div className="p-4 pt-6 md:px-8 md:py-2">
             <Enable2FA session={session} />
+          </div>
+          <div className="p-4 pt-6 md:px-8 md:py-2">
+            <ProviderDetails
+              provider={oAuthProvider}
+              accountId={user.id}
+              providers={[NEXT_PUBLIC_GOOGLE, NEXT_PUBLIC_GITHUB]}
+            />
           </div>
         </>
       )}

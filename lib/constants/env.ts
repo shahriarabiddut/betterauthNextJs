@@ -22,6 +22,12 @@ export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000/";
 export const SITE_EMAIL = process.env.SITE_EMAIL || "credentialsNotFound";
 
+const isGoogleEnabled = !!process.env.GOOGLE_CLIENT_ID;
+const isGitHubEnabled = !!process.env.GITHUB_CLIENT_ID;
+
+export const NEXT_PUBLIC_GOOGLE = isGoogleEnabled;
+export const NEXT_PUBLIC_GITHUB = isGitHubEnabled;
+
 export const protectedRoutes = [
   "/dashboard",
   "/dashboard/:path*", // All subroutes under /dashboard

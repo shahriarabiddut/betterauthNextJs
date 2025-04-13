@@ -39,17 +39,23 @@ export default function UpdatePasswordForm({ user }: { user: SessionUser }) {
   // 2. Define a submit handler.
   async function onSubmit(values: UpdatePassword) {
     // console.log(values);
-    await authClient.changePassword(values, {
-      onSuccess: () => {
-        toast.success("Password Changed , Successfully!");
-        // alert("success");
-      },
-      onError: (ctx) => {
-        toast.error("Something Went Wrong!");
-        console.error(ctx);
-        // alert("failed");
-      },
-    });
+    try {
+      await authClient.changePassword(values, {
+        onSuccess: () => {
+          toast.success("Password Changed , Successfully!");
+          form.reset();
+          // alert("success");
+        },
+        onError: (ctx) => {
+          toast.error(ctx.error.message);
+          console.error(ctx);
+          // alert("failed");
+        },
+      });
+    } catch (error) {
+      toast.error("Something Went Wrong!");
+      console.error(error);
+    }
   }
   return (
     <>

@@ -128,6 +128,12 @@ export const auth = betterAuth({
       clientSecret: GOOGLE_CLIENT_SECRET,
     },
   },
+  account: {
+    accountLinking: {
+      enabled: true,
+      trustedProviders: ["google", "github"],
+    },
+  },
   appName: SITE_NAME, // provide your app name. It'll be used as an issuer.
   plugins: [
     nextCookies(),
