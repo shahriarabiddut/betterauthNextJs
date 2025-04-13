@@ -6,6 +6,7 @@ import { FaGoogle, FaGithub } from "react-icons/fa";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export default function ProviderDetails({
   provider,
@@ -17,22 +18,23 @@ export default function ProviderDetails({
   providers?: boolean[] | null;
 }) {
   const [loading, setLoading] = useState(false);
-  console.log(accountId);
+  const router = useRouter();
+  // console.log(accountId);
   const getProviderDetails = (provider: string | null) => {
     switch (provider) {
       case "google":
         return {
           icon: <FaGoogle className="text-red-500" />,
           label: "Google",
-          bg: "bg-green-50",
-          text: "text-green-600",
+          bg: "bg-muted",
+          text: "text-primary",
         };
       case "github":
         return {
-          icon: <FaGithub className="text-gray-800" />,
+          icon: <FaGithub className="text-foreground" />,
           label: "GitHub",
-          bg: "bg-gray-100",
-          text: "text-gray-900",
+          bg: "bg-muted",
+          text: "text-foreground",
         };
       default:
         return {
@@ -57,11 +59,11 @@ export default function ProviderDetails({
       await authClient.unlinkAccount(
         {
           providerId: provider,
-          accountId: accountId,
         },
         {
           onSuccess: async () => {
-            toast.success(`${label} account unlinked successfully`);
+            toast.success(`Account unlinked successfully`);
+            router.push("/dashboard/profile/edit");
           },
           onError: async (context) => {
             console.error(context);

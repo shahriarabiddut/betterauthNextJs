@@ -30,7 +30,7 @@ const EditProfile = async () => {
   const oAuthProvider = oAuthAccount?.provider || null;
 
   return (
-    <section className="space-y-1 pt-5 pb-10">
+    <section className="space-y-0.5 pt-5 pb-10">
       {!credentialProvider ? (
         <>
           <div className="p-4 pt-6 md:px-8 md:py-2">

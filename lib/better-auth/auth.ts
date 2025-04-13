@@ -132,6 +132,7 @@ export const auth = betterAuth({
     accountLinking: {
       enabled: true,
       trustedProviders: ["google", "github"],
+      allowDifferentEmails: true,
     },
   },
   appName: SITE_NAME, // provide your app name. It'll be used as an issuer.
