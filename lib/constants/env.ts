@@ -31,4 +31,5 @@ export const loggedInInvalidRoutes = [
   "/sign-",
   "/email-verification",
   "/reset-password",
+  "/2fa-verification",
 ];

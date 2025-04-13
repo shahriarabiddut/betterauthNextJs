@@ -56,9 +56,10 @@ export default function SignInForm() {
       {
         onSuccess: async (context) => {
           setSuccess("Successfully Logged In! Redirecting...");
+          const { data, error } = await authClient.twoFactor.sendOtp();
           setTimeout(() => {
-            router.push("/dashboard");
-          }, 1000);
+            router.push("/2fa-verification");
+          }, 300);
         },
         onError: async (context) => {
           console.log(context);

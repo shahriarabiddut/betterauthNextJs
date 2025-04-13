@@ -71,6 +71,12 @@ export const PasswordSchema = z.object({
       message: "Maximum 30 Characters!",
     }),
 });
+export const OTPSchema = z.object({
+  otp: z
+    .string()
+    .length(6, "OTP must be 6 digits")
+    .regex(/^\d+$/, "OTP must contain only numbers"),
+});
 
 export const UpdateUserSchema = z.object({
   image: z.string().url(),
@@ -92,8 +98,9 @@ export const UpdateUserEmailSchema = z.object({
     .toLowerCase(),
   callbackURL: z.string().default("/dashboard"),
 });
+
 export const UpdateUserPasswordSchema = z.object({
-   newPassword: z
+  newPassword: z
     .string()
     .min(6, {
       message: "Minimum 6 Characters Required!",
@@ -101,7 +108,7 @@ export const UpdateUserPasswordSchema = z.object({
     .max(30, {
       message: "Maximum 30 Characters!",
     }),
-    currentPassword: z
+  currentPassword: z
     .string()
     .min(6, {
       message: "Minimum 6 Characters Required!",
@@ -109,5 +116,17 @@ export const UpdateUserPasswordSchema = z.object({
     .max(30, {
       message: "Maximum 30 Characters!",
     }),
-    revokeOtherSessions: z.boolean()
+  revokeOtherSessions: z.boolean(),
+});
+
+export const Enable2FASchema = z.object({
+  state: z.boolean(),
+  password: z
+    .string()
+    .min(6, {
+      message: "Minimum 6 Characters Required!",
+    })
+    .max(30, {
+      message: "Maximum 30 Characters!",
+    }),
 });
