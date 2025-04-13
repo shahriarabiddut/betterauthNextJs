@@ -1,12 +1,9 @@
 import { DashboardContent } from "@/components/dashboard/dashboard-content";
-import React from "react";
 
-const page = () => {
+export default async function Dashboard() {
   return (
     <div>
       <DashboardContent />
     </div>
   );
-};
-
-export default page;
+}

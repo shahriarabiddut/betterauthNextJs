@@ -3,6 +3,8 @@ import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import {
   GITHUB_CLIENT_ID,
   GITHUB_CLIENT_SECRET,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
   MONGODB_URL,
   SITE_NAME,
 } from "@/lib/constants/env";
@@ -105,8 +107,8 @@ export const auth = betterAuth({
                         <h2>Confirm Your Account Deletion Request</h2>
                         <p>Click the button below to confirm:</p>
                         <a href="${url}"
-                          style="display: inline-block; padding: 10px 20px; margin: 20px 0; color: #fff; background-color: #007bff; text-decoration: none; border-radius: 5px;">
-                          I Confirm To Change My Email
+                          style="display: inline-block; padding: 7px 14px; margin: 20px 0; color: #fff; background-color: #ff0500; text-decoration: none; border-radius: 5px;font-size:16px;">
+                          I Confirm My Account Deletion
                         </a>
                         <p>If you did not request this, please ignore this email.</p>
                       </div>
@@ -116,12 +118,16 @@ export const auth = betterAuth({
     },
   },
 
-  // socialProviders: {
-  //   github: {
-  //     clientId: GITHUB_CLIENT_ID,
-  //     clientSecret: GITHUB_CLIENT_SECRET,
-  //   },
-  // },
+  socialProviders: {
+    // github: {
+    //   clientId: GITHUB_CLIENT_ID,
+    //   clientSecret: GITHUB_CLIENT_SECRET,
+    // },
+    google: {
+      clientId: GOOGLE_CLIENT_ID,
+      clientSecret: GOOGLE_CLIENT_SECRET,
+    },
+  },
   appName: SITE_NAME, // provide your app name. It'll be used as an issuer.
   plugins: [
     nextCookies(),
